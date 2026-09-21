@@ -1727,6 +1727,34 @@ h1 {
 
 /* Agregar más estilos según sea necesario */
 
+/* ---- Botón de música (respaldo si el autoplay se bloquea) ---- */
+.boton-musica {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-60px);
+  z-index: 200;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #111;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 18px;
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  pointer-events: none;
+}
+.boton-musica.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /* ---- Indicador de scroll ---- */
 .scroll-cue {
   position: absolute;

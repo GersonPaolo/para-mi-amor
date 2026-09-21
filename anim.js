@@ -11,6 +11,46 @@ function ocultarTitulo() {
 
 setTimeout(ocultarTitulo, 220000);
 
+// Muchos navegadores (sobre todo en celular) bloquean el audio con
+// sonido si la página no tuvo una interacción directa del usuario.
+// Si el autoplay falla, mostramos un botón para que lo arranque a mano;
+// y como red de seguridad, cualquier primer toque en la pantalla
+// también intenta reproducirlo.
+document.addEventListener("DOMContentLoaded", function () {
+  var cancion = document.getElementById("cancion");
+  var botonMusica = document.getElementById("boton-musica");
+  if (!cancion || !botonMusica) return;
+
+  function ocultarBoton() {
+    botonMusica.classList.remove("visible");
+  }
+
+  function intentarReproducir() {
+    var promesa = cancion.play();
+    if (promesa && typeof promesa.then === "function") {
+      promesa.then(ocultarBoton).catch(function () {
+        botonMusica.classList.add("visible");
+      });
+    } else {
+      ocultarBoton();
+    }
+  }
+
+  intentarReproducir();
+
+  botonMusica.addEventListener("click", function () {
+    intentarReproducir();
+  });
+
+  document.addEventListener(
+    "click",
+    function () {
+      if (cancion.paused) intentarReproducir();
+    },
+    { once: true }
+  );
+});
+
 // Aparición suave de la carta y la galería al hacer scroll
 document.addEventListener("DOMContentLoaded", function () {
   var reveals = document.querySelectorAll(".reveal");
